@@ -4,17 +4,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    static CommandHistory commandHistory = new CommandHistory();
     public static void main(String[] args) {
         String currentDirectory = System.getProperty("user.dir");
         boolean run = true;
-        CommandHistory commandHistory = new CommandHistory();
+
         while(run){
             System.out.print("["+currentDirectory+"]:");
             Scanner input = new Scanner(System.in);
             String userInput = input.nextLine();
-            run = continueProgram(userInput);
-            run = isValidCommand(userInput);
             commandHistory.add(userInput);
+            if(!continueProgram(userInput)){
+                break;
+            }
+            if (!isValidCommand(userInput)) {
+                break;
+            }
         }
 
     }
@@ -29,9 +34,20 @@ public class Main {
     }
 
     public static boolean isValidCommand(String userInput){
-        if(userInput.substring(0,4).equals("list")){
+        if(userInput.substring(0,1).equals("^")){
+            if(commandHistory.errorCheck(userInput)){
+                if(continueProgram(commandHistory.command(commandHistory.index))){
+                    return isValidCommand(commandHistory.command(commandHistory.index));
+                }
+                return false;
+            }
+            return false;
+        }else if(userInput.substring(0,4).equals("list")){
             List list = new List(userInput);
             return list.errorCheck();
+        }
+        else if(userInput.substring(0,7).equals("history")){
+            return commandHistory.errorCheck(userInput);
         }
         return false;
     }

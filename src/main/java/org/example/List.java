@@ -28,6 +28,8 @@ public class List {
             }
         }
     }
+    //TODO: create printDirectory
+    //TODO: make time readable
     private void printFile(File file){
         String name = file.getName();
         String time = String.valueOf(file.lastModified());
