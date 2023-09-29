@@ -2,6 +2,14 @@
 
 ## Requirements:
 
+### Tracking Time
+
+ptime command
+
+Tracks time for built-in child processes. Does not track time for built-in
+shell commands or those that end in &.
+Displays total number of seconds to the 4th decimal place.
+
 ### List of File and Directories
 
 list command
@@ -53,3 +61,30 @@ exit command
 if user enters exit, then program will end
 
 
+
+
+## Pseudocode:
+
+### main class:
+
+contains while loop that will run program until user types 'exit'
+use switch statements/ if statements to handle command line arguments and everytime new command is done, add it to arraylist (do invalid commands need add?)
+
+### command history class:
+
+fun(just history as argument):
+    return arraylist of command history
+
+fun(^ X as argument):
+    return command of index X+1 and execute
+
+### file/directory class:
+
+fun createdirectory(directory):
+    use File.createDirectories(directory) from java.nio.file.Paths and java.nio.file.Path to create directory
+    if file already exists return error
+fun deletedirectory(directory):
+    use File.delete(directory) from java.nio.file.Paths and java.nio.file.Path to create directory
+    if file does not exist return error use checkfileexists
+fun checkfileexists(directory):
+    check to see if directory already exists
