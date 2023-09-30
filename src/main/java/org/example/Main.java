@@ -19,11 +19,9 @@ public class Main {
                 break;
             }
             if (!isValidCommand(userInput)) {
-                System.out.println(userInput);
-                break;
+                System.out.println("Invalid command!");
             }
         }
-
     }
 
     public static boolean continueProgram(String userInput){

@@ -13,10 +13,13 @@ public class DirectoryChange {
         return System.getProperty("user.dir");
     }
     public static boolean errorCheck(String currentDirectory, String directory){
-        String newDirectory = System.getProperty("user.dir") + "/" + directory;
-        Path path = Paths.get(currentDirectory,directory);
-
-        System.out.println(path);
+        Path path;
+        if(directory.equals("..")){
+            Path currentPath = Paths.get(currentDirectory);
+            path = currentPath.getParent();
+        }else {
+            path = Paths.get(currentDirectory,directory);
+        }
         if (Files.exists(path)) {
             try{
                 directoryUser = path.toRealPath().toString();

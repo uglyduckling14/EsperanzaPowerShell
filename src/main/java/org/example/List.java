@@ -45,10 +45,11 @@ public class List {
         String name = file.getName();
         String time =getTime(file.lastModified());
         String permissions = getPermissions(file);
-        for(File f: Objects.requireNonNull(file.listFiles())){
-            permissions+= getPermissions(f);
+        int bytes = 0;
+        for(File f: Objects.requireNonNull(file.listFiles())) {
+            permissions += getPermissions(f);
+            bytes += (f.length());
         }
-        String bytes = String.valueOf(file.length());
         System.out.println(permissions+"\t"+bytes+"  "+time+"  "+name);
     }
 
