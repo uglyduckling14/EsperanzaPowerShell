@@ -47,7 +47,6 @@ public class List {
         String permissions = getPermissions(file);
         int bytes = 0;
         for(File f: Objects.requireNonNull(file.listFiles())) {
-            permissions += getPermissions(f);
             bytes += (f.length());
         }
         System.out.println(permissions+"\t"+bytes+"  "+time+"  "+name);

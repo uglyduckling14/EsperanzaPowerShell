@@ -14,7 +14,6 @@ public class CommandHistory {
         System.out.println("-- Command History --");
         for(String command:commandHistory){
             int index = commandHistory.indexOf(command)+1;
-            System.out.println(commandHistory);
             System.out.println(index+" : "+command);
         }
     }

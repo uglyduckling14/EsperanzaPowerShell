@@ -34,7 +34,7 @@ public class Main {
     }
 
     public static boolean isValidCommand(String userInput) {
-        if (userInput.substring(0, 1).equals("^")) {
+        if (userInput.startsWith("^")) {
             if (commandHistory.errorCheck(userInput)) {
                 if (continueProgram(commandHistory.command(commandHistory.index))) {
                     return isValidCommand(commandHistory.command(commandHistory.index));
@@ -42,17 +42,29 @@ public class Main {
                 return false;
             }
             return false;
-        }else if(userInput.substring(0,2).equals("cd")){
+        }
+        else if(userInput.startsWith("cd")){
             if(userInput.length() > 2){
                 return DirectoryChange.errorCheck(System.getProperty("user.dir"), userInput.substring(3));
             }
+            if(userInput.equals("cd")){
+                System.setProperty("user.dir", System.getProperty("user.home"));
+                return true;
+            }
             return true;
-        }else if(userInput.substring(0,4).equals("list")){
+        }
+        else if(userInput.startsWith("list")){
             List list = new List(userInput);
             return list.errorCheck();
         }
-        else if(userInput.substring(0,7).equals("history")){
+        else if(userInput.startsWith("history")){
             return commandHistory.errorCheck(userInput);
+        }
+        else if(userInput.startsWith("mdir")){
+            return DirectoryChange.makeDir(userInput.substring(5));
+        }
+        else if(userInput.startsWith("rdir")){
+            return DirectoryChange.removeDir(userInput.substring(5));
         }
         return false;
     }
