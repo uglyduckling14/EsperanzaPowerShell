@@ -1,14 +1,11 @@
 package org.example;
-import java.io.File;
-import java.nio.file.Path;
-import java.util.ArrayList;
+
 import java.util.Scanner;
 public class Main {
     static CommandHistory commandHistory = new CommandHistory();
     static String currentDirectory;
+    static long totalTime;
     public static void main(String[] args) {
-
-
         while(true){
             currentDirectory = System.getProperty("user.dir");
             System.out.print("["+currentDirectory+"]:");
@@ -19,7 +16,7 @@ public class Main {
                 break;
             }
             if (!isValidCommand(userInput)) {
-                System.out.println("Invalid command!");
+                System.out.println();
             }
         }
     }
@@ -66,6 +63,13 @@ public class Main {
         else if(userInput.startsWith("rdir")){
             return DirectoryChange.removeDir(userInput.substring(5));
         }
-        return false;
+        else if(userInput.equals("ptime")){
+            System.out.println("Total time for child processes:" + ((double)totalTime)/1000 + " seconds");
+            return true;
+        }else{
+            long time = External.runExternal(userInput);
+            totalTime+=time;
+            return time!=0;
+        }
     }
 }

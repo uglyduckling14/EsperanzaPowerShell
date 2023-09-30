@@ -72,7 +72,7 @@ public class List {
 
     private String getTime(long time){
         Date date = new Date(time);
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
         String formatted = sdf.format(date);
         return formatted;
     }
