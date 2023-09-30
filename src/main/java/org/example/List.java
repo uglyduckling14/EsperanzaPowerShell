@@ -1,6 +1,9 @@
 package org.example;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 
 public class List {
     String userInput;
@@ -22,18 +25,29 @@ public class List {
         File[] files = directory.listFiles();
         if(files != null){
             for (File file : files) {
-                if (file.isDirectory() || file.isFile()) {
+                if (file.isFile()) {
                     printFile(file);
+                }else if(file.isDirectory()){
+                    printDirectory(file, file.getPath());
                 }
             }
         }
     }
-    //TODO: create printDirectory
-    //TODO: make time readable
     private void printFile(File file){
         String name = file.getName();
-        String time = String.valueOf(file.lastModified());
+        String time =getTime(file.lastModified());
         String permissions = getPermissions(file);
+        String bytes = String.valueOf(file.length());
+        System.out.println(permissions+"\t"+bytes+"  "+time+"  "+name);
+    }
+
+    private void printDirectory(File file, String filePath){
+        String name = file.getName();
+        String time =getTime(file.lastModified());
+        String permissions = getPermissions(file);
+        for(File f: Objects.requireNonNull(file.listFiles())){
+            permissions+= getPermissions(f);
+        }
         String bytes = String.valueOf(file.length());
         System.out.println(permissions+"\t"+bytes+"  "+time+"  "+name);
     }
@@ -54,5 +68,12 @@ public class List {
         }
         permissions+="-";
         return permissions;
+    }
+
+    private String getTime(long time){
+        Date date = new Date(time);
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyy HH:mm");
+        String formatted = sdf.format(date);
+        return formatted;
     }
 }
