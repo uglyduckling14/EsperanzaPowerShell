@@ -12,9 +12,8 @@ public class CommandHistory {
     }
     private void displayAll(){
         System.out.println("-- Command History --");
-        for(String command:commandHistory){
-            int index = commandHistory.indexOf(command)+1;
-            System.out.println(index+" : "+command);
+        for(int index = 0; index<commandHistory.size(); index++){
+            System.out.println(index+1 +" : "+commandHistory.get(index));
         }
     }
     public boolean errorCheck(String userInput){
